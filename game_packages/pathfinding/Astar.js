@@ -4,10 +4,10 @@ import { isEmpty, getSurroundingPoints, get_point, distance } from "../utilities
 import { node } from "./classes.js"
 //weight map where 1's equal walls and zeroes equal empty space
 var test_weights = [[0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
-                    [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-                    [1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
+[0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+[1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
 ]
 var copy = [[0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
 [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
@@ -26,6 +26,7 @@ function generate_weighted_grid(width, height) {
 }
 //this implentation takes an extra depth argument to decide how many steps it should take before giving up and deciding that theres no path to the end
 //the start and end arguments both take arrays each holding their respective x and y values
+//in
 function Astar(array, start, end, depth) {
     var open_list = [];
     var closed_list = []
@@ -38,9 +39,7 @@ function Astar(array, start, end, depth) {
         var current = get_lowest_node(open_list);
         //check if weve reached the goal
         if (current.x == end.x && current.y == end.y) {
-            console.log("path found!");
-            reconstruct_path(current)
-            return 0;
+            return reconstruct_path(current);
         }
 
         //move the current node from open to closed list
@@ -97,12 +96,7 @@ function reconstruct_path(end_node) {
         path.push(current.parent)
         current = current.parent
     }
-    for (let node of path) {
-        if (node != undefined) {
-            console.log(node.x, node.y)
-        }
-    }
-
+    return path;
 }
 //find wether a node is in a list using its position
 function find_node(nodes, x, y) {
@@ -115,23 +109,28 @@ function find_node(nodes, x, y) {
     return false;
 }
 //prints the weight map using ascii characters for each different weight
-function grid_graphics(weightmap) {
-    var array = ""
-    weightmap.forEach(function (row, index) {
-        var new_row = [];
-        row.forEach(function (weight, index) {
-            if (weight == 0) {
-                new_row.push(" ")
-            } if (weight == 1) {
-                new_row.push("■")
+function grid_graphics(gridmap, start, end) {
+    var line = ""
+    const path = Astar( gridmap,{ x: 0, y: 0 }, { x: 9, y: 4 })
+    for (var y = 0; y < gridmap.length; y++) {
+        for (var x = 0; x < gridmap[y].length; x++)
+            if (gridmap[y][x] == 1) {
+                gridmap[y][x] = "⬛"
+            } else if (gridmap[y][x] == 0) {
+                gridmap[y][x] = "⬜"
             }
-        });
-        array += new_row + "\n"
-    }
-    );
-    const final_array = array.replace(/,/g, "");
 
-    console.log(final_array)
+    }try{
+    for(let node of path){
+        console.log(node.x,node.y)
+        gridmap[node.y][node.x] = "🟥"
+    }}catch{}
+    for (let row of gridmap) {
+        line += "\n"
+        for (let square of row)
+            line += square
+    }
+    console.log(line)
 }
-grid_graphics(test_weights)
+grid_graphics(test_weights, { x: 0, y: 0 }, { x: 9, y: 4 })
 Astar(test_weights, { x: 0, y: 0 }, { x: 9, y: 4 }, 0)
