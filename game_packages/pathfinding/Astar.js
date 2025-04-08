@@ -3,18 +3,6 @@
 import { isEmpty, getSurroundingPoints, get_point, distance } from "../utilities/utilities.js";
 import { node } from "./classes.js"
 //weight map where 1's equal walls and zeroes equal empty space
-var test_weights = [[0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
-[0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-[1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
-]
-var copy = [[0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
-[0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-[1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
-]
 function generate_weighted_grid(width, height) {
     var grid = []
     for (var x = 0; x < width; x++) {
@@ -25,7 +13,7 @@ function generate_weighted_grid(width, height) {
 
 }
 //this implentation takes an extra depth argument to decide how many steps it should take before giving up and deciding that theres no path to the end
-//the start and end arguments both take arrays each holding their respective x and y values
+//the start and end arguments both take js objects each holding properties for their respective x and y values
 //in
 function Astar(array, start, end, depth) {
     var open_list = [];
@@ -131,5 +119,4 @@ function grid_graphics(gridmap, start, end) {
     }
     console.log(line)
 }
-grid_graphics(test_weights, { x: 0, y: 0 }, { x: 9, y: 4 })
-Astar(test_weights, { x: 0, y: 0 }, { x: 9, y: 4 }, 0)
+
