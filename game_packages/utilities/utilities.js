@@ -34,11 +34,10 @@ export function getSurroundingPoints(array, x, y) {
     for (let index in indexes) {
         //try catch to handle out of bounds error
         try {
-            if (array[indexes[index].value[1]][indexes[index].value[0]] != undefined) {
-                surrounding_points.push({ value: array[indexes[index].value[1]][indexes[index].value[0]], x: indexes[index].value[0], y: indexes[index].value[1] })
-                //handles out of bounds error by setting the non existent point value to null in the surrounding points object
-            }
-        } catch {
+            if (array[indexes[index].value[1]][indexes[index].value[0]] != undefined){ 
+            surrounding_points.push({value:array[indexes[index].value[1]][indexes[index].value[0]],x:indexes[index].value[0],y:indexes[index].value[1]})
+            //handles out of bounds error by setting the non existent point value to null in the surrounding points object
+}        } catch {
 
         }
     }
@@ -54,3 +53,4 @@ var test_weights = [[0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
 ]
+console.log(getSurroundingPoints(test_weights,0,0))

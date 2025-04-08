@@ -122,7 +122,6 @@ function grid_graphics(gridmap, start, end) {
 
     }try{
     for(let node of path){
-        console.log(node.x,node.y)
         gridmap[node.y][node.x] = "🟥"
     }}catch{}
     for (let row of gridmap) {
