@@ -1,7 +1,6 @@
 //custom package for generating perlin noise gradient maps adapted from https://rtouti.github.io/graphics/perlin-noise-algorithm
 
-const seed = 7;
-const gen = lcg(seed);
+
 //class for creating directionless scalar vectors
 class Vector2 {
 	constructor(x, y) {
@@ -133,4 +132,3 @@ function generateBrownianNoisemap(height, width, seed, frequency, octaves, freq_
 	return noise_coords
 }
 
-generateNoisemap("noise_canvas", 100, 100, .2, 4, .5, 1)

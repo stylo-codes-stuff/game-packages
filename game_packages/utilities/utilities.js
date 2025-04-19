@@ -34,10 +34,11 @@ export function getSurroundingPoints(array, x, y) {
     for (let index in indexes) {
         //try catch to handle out of bounds error
         try {
-            if (array[indexes[index].value[1]][indexes[index].value[0]] != undefined){ 
-            surrounding_points.push({value:array[indexes[index].value[1]][indexes[index].value[0]],x:indexes[index].value[0],y:indexes[index].value[1]})
-            //handles out of bounds error by setting the non existent point value to null in the surrounding points object
-}        } catch {
+            if (array[indexes[index].value[1]][indexes[index].value[0]] != undefined) {
+                surrounding_points.push({ value: array[indexes[index].value[1]][indexes[index].value[0]], x: indexes[index].value[0], y: indexes[index].value[1] })
+                //handles out of bounds error by setting the non existent point value to null in the surrounding points object
+            }
+        } catch {
 
         }
     }
@@ -47,10 +48,21 @@ export function getSurroundingPoints(array, x, y) {
 export function get_point(array, x, y) {
     return array[y][x];
 }
-var test_weights = [[0, 0, 1, 1, 0, 0, 0, 1, 0, 1],
-[0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-[1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
-]
-console.log(getSurroundingPoints(test_weights,0,0))
+//creates a deep copy of the given array
+export function copyArray(array) {
+    if (typeof arr !== 'object' || arr === null) {
+        return arr;
+    }
+}
+//takes a 2d array,an object for the center of the circle and then an integer value for the radius of the circle
+export function getCirclePoints(array, center, radius) {
+    var points = [];
+    for (var y = 0; y < array.length; y++) {
+        for (var x = 0; x < array[y].length; x++) {
+            if (Math.pow(x - center.x, 2) + Math.pow(y - center.y,2) <= Math.pow(radius, 2)){
+                points.push({ x: x, y: y })
+            }
+        }
+    }
+    return points
+}

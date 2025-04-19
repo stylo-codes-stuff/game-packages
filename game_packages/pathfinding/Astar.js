@@ -1,13 +1,12 @@
 //functions for using and testing my A* pathfinding implementation
 //import necessary utilities
-import { isEmpty, getSurroundingPoints, get_point, distance } from "../utilities/utilities.js";
+import { isEmpty, getSurroundingPoints, get_point, distance,copyArray } from "../utilities/utilities.js";
 import { node } from "./classes.js"
 //weight map where 1's equal walls and zeroes equal empty space
 function generate_weighted_grid(width, height) {
     var grid = []
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
-
         }
     }
 
@@ -40,7 +39,7 @@ function Astar(array, start, end, depth) {
         var neighbors = getSurroundingPoints(array, current.x, current.y)
         for (const [key, value] of Object.entries(neighbors)) {
             //skip evaluated nodes and walls
-            if (find_node(closed_list, neighbors[key].x, neighbors[key].y) == true || value == 1) {
+            if (find_node(closed_list, neighbors[key].x, neighbors[key].y) == true || value.value == 1) {
                 continue;
             }
 
@@ -97,26 +96,30 @@ function find_node(nodes, x, y) {
     return false;
 }
 //prints the weight map using ascii characters for each different weight
-function grid_graphics(gridmap, start, end) {
+//for demo purposes
+function grid_graphics(grid_map, start, end) {
     var line = ""
-    const path = Astar( gridmap,{ x: 0, y: 0 }, { x: 9, y: 4 })
-    for (var y = 0; y < gridmap.length; y++) {
-        for (var x = 0; x < gridmap[y].length; x++)
-            if (gridmap[y][x] == 1) {
-                gridmap[y][x] = "⬛"
-            } else if (gridmap[y][x] == 0) {
-                gridmap[y][x] = "⬜"
+    let new_map = grid_map
+    let path = Astar(new_map, start, end)
+    for (var y = 0; y < new_map.length; y++) {
+        for (var x = 0; x < new_map[y].length; x++)
+            if (new_map[y][x] == 1) {
+                new_map[y][x] = "⬛"
+            } else if (new_map[y][x] == 0) {
+                new_map[y][x] = "⬜"
             }
 
-    }try{
-    for(let node of path){
-        gridmap[node.y][node.x] = "🟥"
-    }}catch{}
-    for (let row of gridmap) {
+    } try {
+        for (let node of path) {
+            if (node != undefined ) {
+                new_map[node.y][node.x] = "🟥"
+            }
+        }
+    } catch { }
+    for (let row of new_map) {
         line += "\n"
         for (let square of row)
             line += square
     }
     console.log(line)
 }
-
