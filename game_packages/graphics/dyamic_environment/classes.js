@@ -1,7 +1,7 @@
 //class for storing the properties of grid cells such as flamability and if there destructible
-
-export class cell{
-    constructor(material,hp,walkable,isFlammable,isDestructible,materialUnder,contains,){
+//remember to keep fire from spreading more then once if a tile that just got set on fire is being checked
+export class cell {
+    constructor(material, hp, walkable, isFlammable, isDestructible, materialUnder, contains,) {
         //name of the what material is on the cell
         //property for the material the cell is currently made of
         this.material = material;
@@ -10,7 +10,7 @@ export class cell{
         //property for weither this cell canbe on fire
         this.isFlammable = isFlammable;
         //property fr weither the cell can be completely destroyed
-        this.isDestructible =isDestructible;
+        this.isDestructible = isDestructible;
         //property for the material that will appear if the cell is destroyed
         this.materialUnder = materialUnder;
         //property for the list of grabbable items on the cell
@@ -24,6 +24,11 @@ export class cell{
         this.damageFromFire = this.damageFromFire
         //below are properties for states
         //state for weither this cell is on fire
-        this.onFire= false;
+        this.onFire = false;
     }
+    update(){
+    if(this.onFire == true) {
+        this.hp -= this.damageFromFire 
+    }
+}
 }

@@ -6,6 +6,7 @@ export class node{
         this.g = g;
         this.h = h;
         this.f = f;
-        this.parent = parent
+        this.parent = parent;
+        this.step = null;
     }
 }

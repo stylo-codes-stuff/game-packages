@@ -1,5 +1,6 @@
 //functions for using and testing my A* pathfinding implementation
 //import necessary utilities
+
 import { isEmpty, getSurroundingPoints, get_point, distance,copyArray } from "../utilities/utilities.js";
 import { node } from "./classes.js"
 //weight map where 1's equal walls and zeroes equal empty space
@@ -17,11 +18,13 @@ function generate_weighted_grid(width, height) {
 function Astar(array, start, end, depth) {
     var open_list = [];
     var closed_list = []
+    var iterations = 0;
     //initialize node properties
     open_list.push(new node(start.x, start.y, 0, distance(start.x, start.y, end.x, end.y), distance(start.x, start.y, end.x, end.y)))
 
     while (open_list.length != 0) {
-
+        console.log(iterations)
+        iterations++
         //get the node with the lowest f value
         var current = get_lowest_node(open_list);
         //check if weve reached the goal
@@ -83,6 +86,7 @@ function reconstruct_path(end_node) {
         path.push(current.parent)
         current = current.parent
     }
+    console.log(path)
     return path;
 }
 //find wether a node is in a list using its position
@@ -123,3 +127,4 @@ function grid_graphics(grid_map, start, end) {
     }
     console.log(line)
 }
+
